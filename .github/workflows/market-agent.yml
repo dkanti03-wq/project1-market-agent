@@ -1,0 +1,72 @@
+name: Market Intelligence Agent & Pages Deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    # 매일 한국 시간(KST) 오전 09:00 = UTC 00:00
+    - cron: '0 0 * * *'
+
+# GitHub Pages 배포를 위한 권한 설정
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 동시 배포 방지 및 이전 실행 취소 방지
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run E2E Market Intelligence Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python src/run_pipeline.py
+
+      - name: Verify Dashboard Output
+        run: |
+          if [ ! -f "docs/index.html" ]; then
+            echo "Error: docs/index.html was not generated!"
+            exit 1
+          fi
+          echo "Verified: docs/index.html exists (Size: $(stat -c%s docs/index.html) bytes)"
+          if [ -f "docs/report.json" ]; then
+            echo "Verified: docs/report.json exists"
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'docs'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
