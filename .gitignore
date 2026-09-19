@@ -1,0 +1,37 @@
+# Environment and Secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary & Archive files
+*.zip
+*.tar.gz
+temp_starter/
+
+# Logs (keep directory with .gitkeep)
+logs/*.log
+*.log
+
+# OS generated
+.DS_Store
+Thumbs.db

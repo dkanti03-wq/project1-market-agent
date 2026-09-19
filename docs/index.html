@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaFactory AI | 마켓 & 경쟁사 인텔리전스 대시보드</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'ui-sans-serif', 'system-ui']
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#10b981',
+                            600: '#059669',
+                            900: '#064e3b'
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            850: '#172033',
+                            900: '#0f172a',
+                            950: '#020617'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Pretendard', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .badge-market { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge-policy { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-tech { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    </style>
+</head>
+<body class="bg-dark-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- 헤더 -->
+    <header class="border-b border-slate-800 bg-dark-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center font-bold text-white text-xl shadow-lg shadow-emerald-500/20">
+                    ⚡
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <h1 class="text-xl font-bold tracking-tight text-white">NovaFactory AI</h1>
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Live Intelligence</span>
+                    </div>
+                    <p class="text-xs text-slate-400">제조업 AI 비전 품질검사 맞춤형 시장·정책·기술 동향 리포트</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4 text-xs text-slate-400">
+                <div class="flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>수집 풀: <strong class="text-white">1253건</strong></span>
+                </div>
+                <div class="h-4 w-px bg-slate-800"></div>
+                <div>최종 갱신: <span class="text-slate-300">2026-09-19</span></div>
+                <a href="report.json" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+                    JSON Data
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+
+        <!-- 프로필 & 핵심 메트릭스 -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- 기업 프로필 카드 -->
+            <div class="glass p-6 rounded-2xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">🎯 타겟팅 프로필</h2>
+                    <span class="text-xs text-emerald-400 font-medium">자동 최적화</span>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <div class="text-xs text-slate-400">주요 경쟁사 모니터링</div>
+                        <div class="flex flex-wrap gap-1.5 mt-1">
+                            <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-xs border border-slate-700">VisionForge</span> <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-xs border border-slate-700">InspectAI</span> <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-xs border border-slate-700">FactoryMind</span> <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-xs border border-slate-700">QualiBot</span> <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-xs border border-slate-700">SmartSensorix</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">시장/기술 관심 키워드</div>
+                        <div class="flex flex-wrap gap-1.5 mt-1">
+                            <span class="px-2 py-0.5 rounded-md bg-emerald-950/50 text-emerald-300 text-xs border border-emerald-800/40">AI</span> <span class="px-2 py-0.5 rounded-md bg-emerald-950/50 text-emerald-300 text-xs border border-emerald-800/40">스마트팩토리</span> <span class="px-2 py-0.5 rounded-md bg-emerald-950/50 text-emerald-300 text-xs border border-emerald-800/40">품질검사</span> <span class="px-2 py-0.5 rounded-md bg-emerald-950/50 text-emerald-300 text-xs border border-emerald-800/40">머신비전</span> <span class="px-2 py-0.5 rounded-md bg-emerald-950/50 text-emerald-300 text-xs border border-emerald-800/40">자동화</span> <span class="px-2 py-0.5 rounded-md bg-emerald-950/50 text-emerald-300 text-xs border border-emerald-800/40">클라우드</span> <span class="px-2 py-0.5 rounded-md bg-emerald-950/50 text-emerald-300 text-xs border border-emerald-800/40">제조 AX</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">정부지원/바우처 키워드</div>
+                        <div class="flex flex-wrap gap-1.5 mt-1">
+                            <span class="px-2 py-0.5 rounded-md bg-amber-950/50 text-amber-300 text-xs border border-amber-800/40">창업지원</span> <span class="px-2 py-0.5 rounded-md bg-amber-950/50 text-amber-300 text-xs border border-amber-800/40">AI 바우처</span> <span class="px-2 py-0.5 rounded-md bg-amber-950/50 text-amber-300 text-xs border border-amber-800/40">스마트공장</span> <span class="px-2 py-0.5 rounded-md bg-amber-950/50 text-amber-300 text-xs border border-amber-800/40">R&D</span> <span class="px-2 py-0.5 rounded-md bg-amber-950/50 text-amber-300 text-xs border border-amber-800/40">사업화 자금</span> <span class="px-2 py-0.5 rounded-md bg-amber-950/50 text-amber-300 text-xs border border-amber-800/40">기술개발 지원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 수집 및 추천 통계 요약 -->
+            <div class="glass p-6 rounded-2xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">📊 데이터 인텔리전스 요약</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <div class="text-xs text-slate-400">전체 정제 데이터</div>
+                            <div class="text-2xl font-black text-white mt-1">1253<span class="text-xs text-slate-400 font-normal"> 건</span></div>
+                            <div class="text-xs text-emerald-400 mt-1">✓ 무결성 검증 완료</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <div class="text-xs text-slate-400">맞춤 선별 추천</div>
+                            <div class="text-2xl font-black text-emerald-400 mt-1">30<span class="text-xs text-slate-400 font-normal"> 건</span></div>
+                            <div class="text-xs text-slate-400 mt-1">가중치 알고리즘 적용</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-800 flex justify-between text-xs text-slate-400">
+                    <span>시장(Market): <strong class="text-slate-200">613</strong></span>
+                    <span>정책(Policy): <strong class="text-slate-200">541</strong></span>
+                    <span>기술(Tech): <strong class="text-slate-200">99</strong></span>
+                </div>
+            </div>
+
+            <!-- 핵심 액션 가이드 -->
+            <div class="glass p-6 rounded-2xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">💡 비즈니스 대응 권고사항</h2>
+                    <ul class="space-y-2.5 text-xs text-slate-300">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-emerald-400 font-bold">1.</span>
+                            <span><strong>AI 바우처 공급기업 연계:</strong> 2026년 공고에 맞춘 수요기업 매칭 및 비전 SaaS 바우처 상품 등록 추진</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-amber-400 font-bold">2.</span>
+                            <span><strong>스마트공장 2.0 전환:</strong> 지역 제조 혁신 벨트(부산/창원 등) 제조 AX 품질검사 프로젝트 선점</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-blue-400 font-bold">3.</span>
+                            <span><strong>경쟁사 동향:</strong> VisionForge 등 경쟁사 SaaS 가격 및 클라우드 연동 전략 벤치마킹</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-xs text-slate-500 mt-3 text-right">전략 분석 엔진 v1.0</div>
+            </div>
+        </section>
+
+        <!-- TOP 10 핵심 하이라이트 -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <h2 class="text-lg font-bold text-white">🔥 TOP 10 최우선 검토 인텔리전스</h2>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-400 border border-red-500/20">High Impact</span>
+                </div>
+                <div class="text-xs text-slate-400">자사 관련성 점수 순위</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#1</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-market">시장 동향</span>
+                                <span class="text-xs text-slate-400">폴리뉴스 Polinews</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">66.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMibkFVX3lxTE54RGtJMlZZU3N0YkhISzlqa3pKeVZvT09waDctTXZ4MlMtUnFxOXV6QTh5TFc4UklycHZWMGRnU1ZNNGdZNFd5Y0dhc2IwZXRUaTMzWmswenJfSDRtZjMtOWtYS0V1TWlrc3MyRnpn0gFyQVVfeXFMT2g1YjM0REtrQklFRUNRX3hqWENDSV82SXh2eUlHQ09oeXczNURyQWNaVlliQ0l1VHVQdDFzcC1CVG1EZkxab1hqa2hVcWU0dXNMZENmS01GbzhObm4wamkyRVdtdk05SkRJMVV4ZGcwLUtn?oc=5" target="_blank" rel="noopener noreferrer">
+                                공정 자동화 넘어 '제조AI'로… 부산, 스마트공장 2.0 대전환 속도
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">부산시의 '스마트공장 2.0' 대전환 정책은 제조업 AI 비전 검사 솔루션의 신규 수요 급증을 시사하므로, 동남권 시장 판로 개척 및 지자체 연계 정부지원사업 수주를 선점할 핵심 정책 시그널입니다. 단순 자동화를 넘어 AI 고도화를 추진하는 지역 제조업체를 신속히 타깃팅함으로써 경쟁사 대비 우위 확보와 매출 확대를 도모할 실질적 가치가 있습니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-09-18</span>
+                        <a href="https://news.google.com/rss/articles/CBMibkFVX3lxTE54RGtJMlZZU3N0YkhISzlqa3pKeVZvT09waDctTXZ4MlMtUnFxOXV6QTh5TFc4UklycHZWMGRnU1ZNNGdZNFd5Y0dhc2IwZXRUaTMzWmswenJfSDRtZjMtOWtYS0V1TWlrc3MyRnpn0gFyQVVfeXFMT2g1YjM0REtrQklFRUNRX3hqWENDSV82SXh2eUlHQ09oeXczNURyQWNaVlliQ0l1VHVQdDFzcC1CVG1EZkxab1hqa2hVcWU0dXNMZENmS01GbzhObm4wamkyRVdtdk05SkRJMVV4ZGcwLUtn?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#2</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-policy">정책·지원</span>
+                                <span class="text-xs text-slate-400">전자신문</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">58.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE5KRFBRZGVqODBHZG5CWEZ4ZmF4aHRNNDdaU0hJUjNFX1FYSG1HaGRpZHFsbzlNenRyR3JmMmk3bVhwanBkMFlDdWZUN0ZLZw?oc=5" target="_blank" rel="noopener noreferrer">
+                                메가존클라우드 '에어 스튜디오', AI 바우처 공급 선정… 도입비 최대 2억 지원
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">경쟁사의 정부 AI 바우처 사업 활용 사례를 통해 정책 연계 영업 전략을 벤치마킹할 수 있는 유용한 정보입니다. 당사 역시 AI 바우처 공급기업 등록을 추진함으로써 도입 비용에 부담을 느끼는 제조업 고객의 진입장벽을 낮추고 신규 판로를 적극 개척할 수 있습니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-03-23</span>
+                        <a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE5KRFBRZGVqODBHZG5CWEZ4ZmF4aHRNNDdaU0hJUjNFX1FYSG1HaGRpZHFsbzlNenRyR3JmMmk3bVhwanBkMFlDdWZUN0ZLZw?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#3</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-policy">정책·지원</span>
+                                <span class="text-xs text-slate-400">뉴스와이어</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">58.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5RY2E4ZDhUbm9FVlJQaEQwV3BmNFNGVU5SWHJrdkt0VXlyMjRYdUMzX0Q3NHE4ckdHMEZtZ21odnplV2Q0SjZTS3BHUUVaMUcxejBBVTB1VHViQ2NZaFln?oc=5" target="_blank" rel="noopener noreferrer">
+                                투라인클라우드, 2026년 AI 바우처 지원사업 공급기업 선정… ‘실행 중심 AI 전환’ 본격 지원
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">정부의 AI 바우처 사업은 제조 고객사의 도입 비용 부담을 완화해 신규 판로를 개척할 수 있는 핵심 영업 채널입니다. 타사의 공급기업 선정 동향을 모니터링하여 NovaFactory AI의 2026년 AI 바우처 공급기업 등록 준비 및 제조 수요기업 선점을 위한 수주 전략을 선제적으로 정비하는 데 유용한 정보입니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-03-19</span>
+                        <a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5RY2E4ZDhUbm9FVlJQaEQwV3BmNFNGVU5SWHJrdkt0VXlyMjRYdUMzX0Q3NHE4ckdHMEZtZ21odnplV2Q0SjZTS3BHUUVaMUcxejBBVTB1VHViQ2NZaFln?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#4</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-policy">정책·지원</span>
+                                <span class="text-xs text-slate-400">아이티데일리</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">58.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE0zdmhKM0hJOXhIbjc3bnRGaGNESWp3VGlidEpHS2htREFLaXBzeGdjN2p6TFltWlAxYXJhWUQxZFFZUXprZGlrRV9saDlpend3S3BscWl0UzFKc1lsYmc2Z0dVQzZ0NTg?oc=5" target="_blank" rel="noopener noreferrer">
+                                투라인클라우드, ​​‘2026년 AI 바우처 지원사업 공급기업’ 선정
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">경쟁사의 AI 바우처 공급기업 선정 동향을 통해 2026년 정부 지원사업 시장의 경쟁 지형을 파악하고 선제적인 사업 참여 전략을 수립할 수 있습니다. 이를 바탕으로 AI 비전 품질검사 도입 비용에 부담을 느끼는 제조업 고객사를 타깃하여 바우처 연계 판로를 개척하는 마케팅 전략으로 활용할 수 있습니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-03-19</span>
+                        <a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE0zdmhKM0hJOXhIbjc3bnRGaGNESWp3VGlidEpHS2htREFLaXBzeGdjN2p6TFltWlAxYXJhWUQxZFFZUXprZGlrRV9saDlpend3S3BscWl0UzFKc1lsYmc2Z0dVQzZ0NTg?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#5</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-policy">정책·지원</span>
+                                <span class="text-xs text-slate-400">전자신문</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">58.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE9Qb2drUy1lMHpzN3NNQ0M1Ym1EbHctYThIeEVwT1QxbTJocFhsVWFld0tTeTlySXJQakRWVlZqT2x4d3VIXzlVR2tFVVFiUQ?oc=5" target="_blank" rel="noopener noreferrer">
+                                안랩·클라우드메이트, 'AI 바우처 사업' 솔루션 공급
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">정부의 AI 바우처 지원 확대는 초기 도입 비용 부담이 큰 제조 고객사의 구매 장벽을 낮춰 신규 판로를 공격적으로 개척할 수 있는 핵심 정책 기회입니다. 주요 IT 기업들의 바우처 시장 진입에 대응해 NovaFactory AI 역시 공식 공급기업 등록 및 정책 자금 연계 영업 전략을 신속히 강화할 것을 추천합니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-03-16</span>
+                        <a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE9Qb2drUy1lMHpzN3NNQ0M1Ym1EbHctYThIeEVwT1QxbTJocFhsVWFld0tTeTlySXJQakRWVlZqT2x4d3VIXzlVR2tFVVFiUQ?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#6</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-market">시장 동향</span>
+                                <span class="text-xs text-slate-400">AI타임스</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">56.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiakFVX3lxTE1OcmVnMGJrclp5WFZkSU1iSHFFTTQ5ZW9vY0l2NXQtdnJ2YVFhWjJKTVRReFhQdXlYNDEzdmVTajNjTFFSWkdSdlMxODZFblV6a2lxYy1COWl5MnNZb3VfbnZjZ2hHZHdtcmc?oc=5" target="_blank" rel="noopener noreferrer">
+                                네이버클라우드, 미스트랄 AI와 제조 AX 위한 '소버린 AI' 동맹
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">제조 AX 시장 내 '소버린 AI' 트렌드 확산은 정부지원사업 수주 시 당사 비전 검사 솔루션의 '데이터 보안 및 온프레미스 AI' 경쟁력을 강조할 강력한 시장 명분이 됩니다. 또한, 네이버클라우드 플랫폼 생태계 연계를 통한 신규 판로 개척 및 거대 AI 연합에 대응하는 차별화된 현장 맞춤형 전략 수립에 실질적인 가치를 제공합니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-07-08</span>
+                        <a href="https://news.google.com/rss/articles/CBMiakFVX3lxTE1OcmVnMGJrclp5WFZkSU1iSHFFTTQ5ZW9vY0l2NXQtdnJ2YVFhWjJKTVRReFhQdXlYNDEzdmVTajNjTFFSWkdSdlMxODZFblV6a2lxYy1COWl5MnNZb3VfbnZjZ2hHZHdtcmc?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#7</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-market">시장 동향</span>
+                                <span class="text-xs text-slate-400">더테크</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">56.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiY0FVX3lxTFBWVDA5anBUdk95djNsaFJFOVh0QTdBcC1BcmZ3RHFFazIxT25sWDZSRXVOTFFJWDlmQzducEU4UklHYWpoeXhSOEZvV1NCMnJ5SWlwcGdWN1d5bTRueFMydkxFNA?oc=5" target="_blank" rel="noopener noreferrer">
+                                네이버클라우드·지멘스, 제조 AI 전환 맞손…국내 스마트팩토리 혁신 가속
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">글로벌 자동화 선도기업과 대표 클라우드 플랫폼의 결합으로 제조 AI 생태계가 급확대됨에 따라, 당사의 AI 비전 검사 솔루션을 해당 플랫폼과 연동하는 **기술 제휴 및 판로 개척 기회**로 활용할 수 있습니다. 동시에 스마트공장 고도화 관련 **정부지원사업 수주 및 경쟁 대응 전략**을 선제적으로 수립하는 데 실질적인 인사이트를 제공합니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-06-24</span>
+                        <a href="https://news.google.com/rss/articles/CBMiY0FVX3lxTFBWVDA5anBUdk95djNsaFJFOVh0QTdBcC1BcmZ3RHFFazIxT25sWDZSRXVOTFFJWDlmQzducEU4UklHYWpoeXhSOEZvV1NCMnJ5SWlwcGdWN1d5bTRueFMydkxFNA?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#8</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-market">시장 동향</span>
+                                <span class="text-xs text-slate-400">아시아경제</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">56.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiYEFVX3lxTE1BSHFXXzl2aVhEQjlmUnZOVjdfZ3djbkhjSUhlSnEybjZXTGNJNWRicGtxc0k1Sm00dXNVUUlrSFQ1U0FfVUVfbW05MGFPQjB0ZzFGVDU4b0hqWTBjYnhPMg?oc=5" target="_blank" rel="noopener noreferrer">
+                                네이버클라우드-지멘스, AI·산업 자동화 분야 협력…"제조 혁신 가속"
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">**추천 사유:**  클라우드 대기업과 글로벌 산업 자동화 거인의 협력은 '클라우드·AI 기반 스마트공장' 전환이 가속화됨을 의미하므로, 당사는 이들 플랫폼 생태계와의 연동 솔루션을 선제 개발하여 판로를 확장하고 관련 정부지원사업 수주의 핵심 명분으로 활용해야 합니다. 또한, 거대 플랫폼 연합의 시장 침투에 대응해 제조업 현장에 특화된 '고정밀·경량화 AI 비전 검사'만의 독자적 차별성을 강화하는 전략적 지표로 삼을 것을 추천합니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-06-24</span>
+                        <a href="https://news.google.com/rss/articles/CBMiYEFVX3lxTE1BSHFXXzl2aVhEQjlmUnZOVjdfZ3djbkhjSUhlSnEybjZXTGNJNWRicGtxc0k1Sm00dXNVUUlrSFQ1U0FfVUVfbW05MGFPQjB0ZzFGVDU4b0hqWTBjYnhPMg?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#9</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-market">시장 동향</span>
+                                <span class="text-xs text-slate-400">mt.co.kr</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">56.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1Hc0pHOHlFM1dxYkZ0VGFNNGtFU0ltanEwaW9kanVlMTlNMlhkSnFza09MVVMyNF9aNHNSc3gwTlM3SXJud2ZBWlpfcVRMcU9JY2tkTjlXdFEzWmI5c1dPNmlOTmk0WVnSAWxBVV95cUxQSGwxa1VSbFR0UFpqb2xjbXBFc0x5Y2ZpQmU0V3FBcnFrQXhEX1Y1eTIzX3EwbHpCQjl2WTRqdGF3QzJEaGVINVhwNm41ZGxKak5oOExxcDQtNHcxbjliS0F1dmpQQWhfMGNRWjY?oc=5" target="_blank" rel="noopener noreferrer">
+                                네이버클라우드-지멘스, AI·산업자동화 분야 협력…"제조현장 혁신" - 머니투데이
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">빅테크와 글로벌 자동화 기업의 결합으로 '클라우드 기반 제조 AI' 생태계 재편이 가속화되는 시장 흐름을 파악할 수 있는 주요 시그널입니다. 당사의 특화된 AI 비전 솔루션을 해당 플랫폼 생태계와 연동하는 파트너십 기회를 모색하거나, 독자적인 검사 기술력을 무기로 차별화된 정부지원사업 수주 및 판로 개척 전략을 수립하는 데 실질적인 인사이트를 제공합니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-06-24</span>
+                        <a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1Hc0pHOHlFM1dxYkZ0VGFNNGtFU0ltanEwaW9kanVlMTlNMlhkSnFza09MVVMyNF9aNHNSc3gwTlM3SXJud2ZBWlpfcVRMcU9JY2tkTjlXdFEzWmI5c1dPNmlOTmk0WVnSAWxBVV95cUxQSGwxa1VSbFR0UFpqb2xjbXBFc0x5Y2ZpQmU0V3FBcnFrQXhEX1Y1eTIzX3EwbHpCQjl2WTRqdGF3QzJEaGVINVhwNm41ZGxKak5oOExxcDQtNHcxbjliS0F1dmpQQWhfMGNRWjY?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-600 transition duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700">#10</span>
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold badge-policy">정책·지원</span>
+                                <span class="text-xs text-slate-400">누리일보</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">
+                                <span>적합도</span>
+                                <span class="text-sm">53.0점</span>
+                            </div>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                            <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTFBFajk2TXo3bVRUSTJxeDduWVlOcGVXcVFtN3VNcTIwVHBLUXZPZVVIVHVMVFo4S1A3RHpiR1ByenMyV1hmZjRTUl9kZF9wZ1NUQjVCRUtLcW83bVo0?oc=5" target="_blank" rel="noopener noreferrer">
+                                경기도의회 이대한 의원, “서울보다 먼저 기획한 AI 바우처... 경기도가 스스로 멈춰선 안 돼”
+                            </a>
+                        </h3>
+                        <div class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <div class="text-emerald-400 font-semibold flex items-center space-x-1">
+                                <span>🎯 추천 및 대응 사유:</span>
+                            </div>
+                            <p class="leading-relaxed">**[추천 사유]**  제조업체가 밀집한 경기도의 AI 바우처 정책 유지 및 확대 가능성을 시사하는 뉴스인 만큼, 도내 제조 고객사의 솔루션 도입 비용 부담을 낮춰줄 정책적 기회로 활용할 수 있습니다. 이를 발판으로 지자체 연계 정부지원사업 수주 전략을 선제적으로 점검하고, 도내 제조업 대상의 판로 개척 및 수요기업 선점 전략을 수립하는 데 유용한 정책 동향입니다.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>발행일: 2026-09-18</span>
+                        <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTFBFajk2TXo3bVRUSTJxeDduWVlOcGVXcVFtN3VNcTIwVHBLUXZPZVVIVHVMVFo4S1A3RHpiR1ByenMyV1hmZjRTUl9kZF9wZ1NUQjVCRUtLcW83bVo0?oc=5" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                            <span>원문 기사 보기</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TOP 30 인터랙티브 탐색 테이블 -->
+        <section class="glass p-6 rounded-2xl space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h2 class="text-base font-bold text-white">📑 맞춤 추천 인텔리전스 전체 목록 (TOP 30)</h2>
+                    <p class="text-xs text-slate-400">카테고리 필터 및 실시간 검색을 통해 필요한 정보를 빠르게 탐색하세요.</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="searchInput" placeholder="키워드, 제목, 출처 검색..." class="px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 w-64">
+                    <select id="categoryFilter" class="px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                        <option value="ALL">전체 카테고리</option>
+                        <option value="market">시장 (Market)</option>
+                        <option value="policy">정책·지원 (Policy)</option>
+                        <option value="tech">기술 (Tech)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-slate-900/80 text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-3 w-14 text-center">순위</th>
+                            <th class="py-3 px-3 w-20">구분</th>
+                            <th class="py-3 px-4">제목 및 추천 사유</th>
+                            <th class="py-3 px-3 w-28">출처</th>
+                            <th class="py-3 px-3 w-24">발행일</th>
+                            <th class="py-3 px-3 w-20 text-center">점수</th>
+                            <th class="py-3 px-3 w-20 text-center">원문</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-800/60">
+                        <!-- JS 렌더링 -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="noResults" class="hidden py-8 text-center text-slate-400 text-xs">
+                검색 조건에 맞는 인텔리전스가 없습니다.
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="border-t border-slate-800 bg-dark-900/50 py-6 mt-12 text-center text-xs text-slate-400">
+        <p>© 2026 NovaFactory AI Market Intelligence System. Powered by Antigravity Agentic Pipeline.</p>
+    </footer>
+
+    <!-- 인터랙티브 스크립트 -->
+    <script>
+        const articles = [{"article_id": "CLN-00079", "category": "market", "title": "공정 자동화 넘어 '제조AI'로… 부산, 스마트공장 2.0 대전환 속도", "date": "2026-09-18", "content": "공정 자동화 넘어 '제조AI'로… 부산, 스마트공장 2.0 대전환 속도 폴리뉴스 Polinews", "summary": "공정 자동화 넘어 '제조AI'로… 부산, 스마트공장 2.0 대전환 속도 폴리뉴스 Polinews", "source_url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE54RGtJMlZZU3N0YkhISzlqa3pKeVZvT09waDctTXZ4MlMtUnFxOXV6QTh5TFc4UklycHZWMGRnU1ZNNGdZNFd5Y0dhc2IwZXRUaTMzWmswenJfSDRtZjMtOWtYS0V1TWlrc3MyRnpn0gFyQVVfeXFMT2g1YjM0REtrQklFRUNRX3hqWENDSV82SXh2eUlHQ09oeXczNURyQWNaVlliQ0l1VHVQdDFzcC1CVG1EZkxab1hqa2hVcWU0dXNMZENmS01GbzhObm4wamkyRVdtdk05SkRJMVV4ZGcwLUtn?oc=5", "source_name": "폴리뉴스 Polinews", "company_tag": NaN, "keywords": "AI", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 66.0, "recommendation_reason": "부산시의 '스마트공장 2.0' 대전환 정책은 제조업 AI 비전 검사 솔루션의 신규 수요 급증을 시사하므로, 동남권 시장 판로 개척 및 지자체 연계 정부지원사업 수주를 선점할 핵심 정책 시그널입니다. 단순 자동화를 넘어 AI 고도화를 추진하는 지역 제조업체를 신속히 타깃팅함으로써 경쟁사 대비 우위 확보와 매출 확대를 도모할 실질적 가치가 있습니다.", "business_impact": "High"}, {"article_id": "CLN-00745", "category": "policy", "title": "메가존클라우드 '에어 스튜디오', AI 바우처 공급 선정… 도입비 최대 2억 지원", "date": "2026-03-23", "content": "메가존클라우드 '에어 스튜디오', AI 바우처 공급 선정… 도입비 최대 2억 지원 전자신문", "summary": "메가존클라우드 '에어 스튜디오', AI 바우처 공급 선정… 도입비 최대 2억 지원 전자신문", "source_url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5KRFBRZGVqODBHZG5CWEZ4ZmF4aHRNNDdaU0hJUjNFX1FYSG1HaGRpZHFsbzlNenRyR3JmMmk3bVhwanBkMFlDdWZUN0ZLZw?oc=5", "source_name": "전자신문", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 58.0, "recommendation_reason": "경쟁사의 정부 AI 바우처 사업 활용 사례를 통해 정책 연계 영업 전략을 벤치마킹할 수 있는 유용한 정보입니다. 당사 역시 AI 바우처 공급기업 등록을 추진함으로써 도입 비용에 부담을 느끼는 제조업 고객의 진입장벽을 낮추고 신규 판로를 적극 개척할 수 있습니다.", "business_impact": "Medium"}, {"article_id": "CLN-00765", "category": "policy", "title": "투라인클라우드, 2026년 AI 바우처 지원사업 공급기업 선정… ‘실행 중심 AI 전환’ 본격 지원", "date": "2026-03-19", "content": "투라인클라우드, 2026년 AI 바우처 지원사업 공급기업 선정… ‘실행 중심 AI 전환’ 본격 지원 뉴스와이어", "summary": "투라인클라우드, 2026년 AI 바우처 지원사업 공급기업 선정… ‘실행 중심 AI 전환’ 본격 지원 뉴스와이어", "source_url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5RY2E4ZDhUbm9FVlJQaEQwV3BmNFNGVU5SWHJrdkt0VXlyMjRYdUMzX0Q3NHE4ckdHMEZtZ21odnplV2Q0SjZTS3BHUUVaMUcxejBBVTB1VHViQ2NZaFln?oc=5", "source_name": "뉴스와이어", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 58.0, "recommendation_reason": "정부의 AI 바우처 사업은 제조 고객사의 도입 비용 부담을 완화해 신규 판로를 개척할 수 있는 핵심 영업 채널입니다. 타사의 공급기업 선정 동향을 모니터링하여 NovaFactory AI의 2026년 AI 바우처 공급기업 등록 준비 및 제조 수요기업 선점을 위한 수주 전략을 선제적으로 정비하는 데 유용한 정보입니다.", "business_impact": "Medium"}, {"article_id": "CLN-00777", "category": "policy", "title": "투라인클라우드, ​​‘2026년 AI 바우처 지원사업 공급기업’ 선정", "date": "2026-03-19", "content": "투라인클라우드, ​​‘2026년 AI 바우처 지원사업 공급기업’ 선정 아이티데일리", "summary": "투라인클라우드, ​​‘2026년 AI 바우처 지원사업 공급기업’ 선정 아이티데일리", "source_url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE0zdmhKM0hJOXhIbjc3bnRGaGNESWp3VGlidEpHS2htREFLaXBzeGdjN2p6TFltWlAxYXJhWUQxZFFZUXprZGlrRV9saDlpend3S3BscWl0UzFKc1lsYmc2Z0dVQzZ0NTg?oc=5", "source_name": "아이티데일리", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 58.0, "recommendation_reason": "경쟁사의 AI 바우처 공급기업 선정 동향을 통해 2026년 정부 지원사업 시장의 경쟁 지형을 파악하고 선제적인 사업 참여 전략을 수립할 수 있습니다. 이를 바탕으로 AI 비전 품질검사 도입 비용에 부담을 느끼는 제조업 고객사를 타깃하여 바우처 연계 판로를 개척하는 마케팅 전략으로 활용할 수 있습니다.", "business_impact": "Medium"}, {"article_id": "CLN-00741", "category": "policy", "title": "안랩·클라우드메이트, 'AI 바우처 사업' 솔루션 공급", "date": "2026-03-16", "content": "안랩·클라우드메이트, 'AI 바우처 사업' 솔루션 공급 전자신문", "summary": "안랩·클라우드메이트, 'AI 바우처 사업' 솔루션 공급 전자신문", "source_url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9Qb2drUy1lMHpzN3NNQ0M1Ym1EbHctYThIeEVwT1QxbTJocFhsVWFld0tTeTlySXJQakRWVlZqT2x4d3VIXzlVR2tFVVFiUQ?oc=5", "source_name": "전자신문", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 58.0, "recommendation_reason": "정부의 AI 바우처 지원 확대는 초기 도입 비용 부담이 큰 제조 고객사의 구매 장벽을 낮춰 신규 판로를 공격적으로 개척할 수 있는 핵심 정책 기회입니다. 주요 IT 기업들의 바우처 시장 진입에 대응해 NovaFactory AI 역시 공식 공급기업 등록 및 정책 자금 연계 영업 전략을 신속히 강화할 것을 추천합니다.", "business_impact": "Medium"}, {"article_id": "CLN-00450", "category": "market", "title": "네이버클라우드, 미스트랄 AI와 제조 AX 위한 '소버린 AI' 동맹", "date": "2026-07-08", "content": "네이버클라우드, 미스트랄 AI와 제조 AX 위한 '소버린 AI' 동맹 AI타임스", "summary": "네이버클라우드, 미스트랄 AI와 제조 AX 위한 '소버린 AI' 동맹 AI타임스", "source_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1OcmVnMGJrclp5WFZkSU1iSHFFTTQ5ZW9vY0l2NXQtdnJ2YVFhWjJKTVRReFhQdXlYNDEzdmVTajNjTFFSWkdSdlMxODZFblV6a2lxYy1COWl5MnNZb3VfbnZjZ2hHZHdtcmc?oc=5", "source_name": "AI타임스", "company_tag": NaN, "keywords": "클라우드", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 56.0, "recommendation_reason": "제조 AX 시장 내 '소버린 AI' 트렌드 확산은 정부지원사업 수주 시 당사 비전 검사 솔루션의 '데이터 보안 및 온프레미스 AI' 경쟁력을 강조할 강력한 시장 명분이 됩니다. 또한, 네이버클라우드 플랫폼 생태계 연계를 통한 신규 판로 개척 및 거대 AI 연합에 대응하는 차별화된 현장 맞춤형 전략 수립에 실질적인 가치를 제공합니다.", "business_impact": "Medium"}, {"article_id": "CLN-00455", "category": "market", "title": "네이버클라우드·지멘스, 제조 AI 전환 맞손…국내 스마트팩토리 혁신 가속", "date": "2026-06-24", "content": "네이버클라우드·지멘스, 제조 AI 전환 맞손…국내 스마트팩토리 혁신 가속 더테크", "summary": "네이버클라우드·지멘스, 제조 AI 전환 맞손…국내 스마트팩토리 혁신 가속 더테크", "source_url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBWVDA5anBUdk95djNsaFJFOVh0QTdBcC1BcmZ3RHFFazIxT25sWDZSRXVOTFFJWDlmQzducEU4UklHYWpoeXhSOEZvV1NCMnJ5SWlwcGdWN1d5bTRueFMydkxFNA?oc=5", "source_name": "더테크", "company_tag": NaN, "keywords": "클라우드", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 56.0, "recommendation_reason": "글로벌 자동화 선도기업과 대표 클라우드 플랫폼의 결합으로 제조 AI 생태계가 급확대됨에 따라, 당사의 AI 비전 검사 솔루션을 해당 플랫폼과 연동하는 **기술 제휴 및 판로 개척 기회**로 활용할 수 있습니다. 동시에 스마트공장 고도화 관련 **정부지원사업 수주 및 경쟁 대응 전략**을 선제적으로 수립하는 데 실질적인 인사이트를 제공합니다.", "business_impact": "Medium"}, {"article_id": "CLN-00458", "category": "market", "title": "네이버클라우드-지멘스, AI·산업 자동화 분야 협력…\"제조 혁신 가속\"", "date": "2026-06-24", "content": "네이버클라우드-지멘스, AI·산업 자동화 분야 협력…\"제조 혁신 가속\" 아시아경제", "summary": "네이버클라우드-지멘스, AI·산업 자동화 분야 협력…\"제조 혁신 가속\" 아시아경제", "source_url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1BSHFXXzl2aVhEQjlmUnZOVjdfZ3djbkhjSUhlSnEybjZXTGNJNWRicGtxc0k1Sm00dXNVUUlrSFQ1U0FfVUVfbW05MGFPQjB0ZzFGVDU4b0hqWTBjYnhPMg?oc=5", "source_name": "아시아경제", "company_tag": NaN, "keywords": "클라우드", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 56.0, "recommendation_reason": "**추천 사유:**  클라우드 대기업과 글로벌 산업 자동화 거인의 협력은 '클라우드·AI 기반 스마트공장' 전환이 가속화됨을 의미하므로, 당사는 이들 플랫폼 생태계와의 연동 솔루션을 선제 개발하여 판로를 확장하고 관련 정부지원사업 수주의 핵심 명분으로 활용해야 합니다. 또한, 거대 플랫폼 연합의 시장 침투에 대응해 제조업 현장에 특화된 '고정밀·경량화 AI 비전 검사'만의 독자적 차별성을 강화하는 전략적 지표로 삼을 것을 추천합니다.", "business_impact": "Medium"}, {"article_id": "CLN-00464", "category": "market", "title": "네이버클라우드-지멘스, AI·산업자동화 분야 협력…\"제조현장 혁신\" - 머니투데이", "date": "2026-06-24", "content": "네이버클라우드-지멘스, AI·산업자동화 분야 협력…\"제조현장 혁신\" - 머니투데이 mt.co.kr", "summary": "네이버클라우드-지멘스, AI·산업자동화 분야 협력…\"제조현장 혁신\" - 머니투데이 mt.co.kr", "source_url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1Hc0pHOHlFM1dxYkZ0VGFNNGtFU0ltanEwaW9kanVlMTlNMlhkSnFza09MVVMyNF9aNHNSc3gwTlM3SXJud2ZBWlpfcVRMcU9JY2tkTjlXdFEzWmI5c1dPNmlOTmk0WVnSAWxBVV95cUxQSGwxa1VSbFR0UFpqb2xjbXBFc0x5Y2ZpQmU0V3FBcnFrQXhEX1Y1eTIzX3EwbHpCQjl2WTRqdGF3QzJEaGVINVhwNm41ZGxKak5oOExxcDQtNHcxbjliS0F1dmpQQWhfMGNRWjY?oc=5", "source_name": "mt.co.kr", "company_tag": NaN, "keywords": "클라우드", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 56.0, "recommendation_reason": "빅테크와 글로벌 자동화 기업의 결합으로 '클라우드 기반 제조 AI' 생태계 재편이 가속화되는 시장 흐름을 파악할 수 있는 주요 시그널입니다. 당사의 특화된 AI 비전 솔루션을 해당 플랫폼 생태계와 연동하는 파트너십 기회를 모색하거나, 독자적인 검사 기술력을 무기로 차별화된 정부지원사업 수주 및 판로 개척 전략을 수립하는 데 실질적인 인사이트를 제공합니다.", "business_impact": "Medium"}, {"article_id": "CLN-00712", "category": "policy", "title": "경기도의회 이대한 의원, “서울보다 먼저 기획한 AI 바우처... 경기도가 스스로 멈춰선 안 돼”", "date": "2026-09-18", "content": "경기도의회 이대한 의원, “서울보다 먼저 기획한 AI 바우처... 경기도가 스스로 멈춰선 안 돼” 누리일보", "summary": "경기도의회 이대한 의원, “서울보다 먼저 기획한 AI 바우처... 경기도가 스스로 멈춰선 안 돼” 누리일보", "source_url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBFajk2TXo3bVRUSTJxeDduWVlOcGVXcVFtN3VNcTIwVHBLUXZPZVVIVHVMVFo4S1A3RHpiR1ByenMyV1hmZjRTUl9kZF9wZ1NUQjVCRUtLcW83bVo0?oc=5", "source_name": "누리일보", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "**[추천 사유]**  제조업체가 밀집한 경기도의 AI 바우처 정책 유지 및 확대 가능성을 시사하는 뉴스인 만큼, 도내 제조 고객사의 솔루션 도입 비용 부담을 낮춰줄 정책적 기회로 활용할 수 있습니다. 이를 발판으로 지자체 연계 정부지원사업 수주 전략을 선제적으로 점검하고, 도내 제조업 대상의 판로 개척 및 수요기업 선점 전략을 수립하는 데 유용한 정책 동향입니다.", "business_impact": "Medium"}, {"article_id": "CLN-00804", "category": "policy", "title": "\"AI 활용 역량이 경쟁력\" 부산TP, 스마트공장 기업과 머리 맞대", "date": "2026-09-18", "content": "\"AI 활용 역량이 경쟁력\" 부산TP, 스마트공장 기업과 머리 맞대 v.daum.net", "summary": "\"AI 활용 역량이 경쟁력\" 부산TP, 스마트공장 기업과 머리 맞대 v.daum.net", "source_url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE40dXBVYkhqcVQ4Y3N3RlV1RjhSM2ZDNGN5and4RDh1aFo4NmZqVGVQcG44b3F2NjBNbG1UazhZOTM1cnVld1E?oc=5", "source_name": "v.daum.net", "company_tag": NaN, "keywords": "스마트공장", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(스마트공장) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00807", "category": "policy", "title": "부산테크노파크, 스마트공장 넘어 ‘제조AI·자율형공장’ 전환 지원 강화", "date": "2026-09-18", "content": "부산테크노파크, 스마트공장 넘어 ‘제조AI·자율형공장’ 전환 지원 강화 이뉴스투데이", "summary": "부산테크노파크, 스마트공장 넘어 ‘제조AI·자율형공장’ 전환 지원 강화 이뉴스투데이", "source_url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5fMG9GaDZRREZ3RmFXZGUtT1IxVzRhQjBWQVgtQmxWVEVmWG93Unp5UGU3NmFKUEFibm1iV09yNUVnZ2JjVVFSZFZGRm8xVy1sWmZTckUtQkJuS19uNVdPeWViNkZ2RVo1S3pYRXd5bUZHRzNr0gF0QVVfeXFMTl8wb0ZoNlFERndGYVdkZS1PUjFXNGFCMFZBWC1CbFZURWZYb3dSenlQZTc2YUpQQWJubWJXT3I1RWdnYmNVUVJkVkZGbzFXLWxaZlNyRS1CQm5LX241V095ZWI2RnZFWjVLelhFd3ltRkdHM2s?oc=5", "source_name": "이뉴스투데이", "company_tag": NaN, "keywords": "스마트공장", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(스마트공장) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00626", "category": "policy", "title": "의왕시, 7개 창업지원기관 공동 설명회 개최…AI 사업계획서-세무 실전 교육", "date": "2026-09-16", "content": "의왕시, 7개 창업지원기관 공동 설명회 개최…AI 사업계획서-세무 실전 교육 CNB뉴스", "summary": "의왕시, 7개 창업지원기관 공동 설명회 개최…AI 사업계획서-세무 실전 교육 CNB뉴스", "source_url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE85bU5xeTBaOGR4a2RKYW5LemxFS1hJdjJUelUyZzg4MHlnQk9MTGM1V1UwVDVVY3pxNEc1YXd6NFlEeENvanEyZ0d1YktkeVAxZ1NsTi1QRlUyZGJJYlpGXzlPTy1veHp0X2ow?oc=5", "source_name": "CNB뉴스", "company_tag": NaN, "keywords": "창업지원", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(창업지원) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00904", "category": "policy", "title": "(해설)‘R&D를 넘어 산업화로… 전북의 피지컬AI 미래’", "date": "2026-09-16", "content": "(해설)‘R&D를 넘어 산업화로… 전북의 피지컬AI 미래’ jnv.co.kr", "summary": "(해설)‘R&D를 넘어 산업화로… 전북의 피지컬AI 미래’ jnv.co.kr", "source_url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE44d2o0UFNXRlk5TEFsaGEybUF2SThZc0l5ZDlWd0hUUlBUak5zcjJSZThFNFFpVWlBM01WM2VHSVctalFBUlB1cHg0emNwRE8zZkw3Yk1OSGx1RlF3VjRlZWN6aEh4Zw?oc=5", "source_name": "jnv.co.kr", "company_tag": NaN, "keywords": "R&D", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(R&D) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00810", "category": "policy", "title": "경남도 '제조 AI 확산 거점' 스마트공장 현장 목소리 듣는다", "date": "2026-09-15", "content": "경남도 '제조 AI 확산 거점' 스마트공장 현장 목소리 듣는다 전자신문", "summary": "경남도 '제조 AI 확산 거점' 스마트공장 현장 목소리 듣는다 전자신문", "source_url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9XNlp6aV9KZGcxbzRRRVZlQ1Y3WEJpMnM5UUdoejJpTmNFNXllcHBfTHBYSkh1Q29rWXhhd09iQ2VsMnIwVF9oSXRrZUxLZw?oc=5", "source_name": "전자신문", "company_tag": NaN, "keywords": "스마트공장", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(스마트공장) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00200", "category": "market", "title": "위플로, AI·로봇 기반 품질검사 자동화 솔루션 ‘플로원’ 출시", "date": "2026-06-10", "content": "위플로, AI·로봇 기반 품질검사 자동화 솔루션 ‘플로원’ 출시 한경매거진&북", "summary": "위플로, AI·로봇 기반 품질검사 자동화 솔루션 ‘플로원’ 출시 한경매거진&북", "source_url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9TUzBodkoyNTdHRVBEUVVSUDNaWjQ3TF80WXBDbGpnX2RVRWRHUW1yVTZXNy1qVnlWbDdhS09CZ2V6SnpxT3kwUlQ4Skk0ZjUyWklwVFczejhWaHdSRUtiQTMzNkFsUzNOUDVv?oc=5", "source_name": "한경매거진&북", "company_tag": NaN, "keywords": "품질검사", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI, 자동화, 품질검사) 부합에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00124", "category": "market", "title": "[칼럼] 스마트팩토리는 자동화가 아니라, AI를 위한 준비다", "date": "2026-05-27", "content": "[칼럼] 스마트팩토리는 자동화가 아니라, AI를 위한 준비다 FA저널", "summary": "[칼럼] 스마트팩토리는 자동화가 아니라, AI를 위한 준비다 FA저널", "source_url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5xcnpib0tEMTlMYWNTbXVQMlNDWHg0b1BZbEJtalNla3VBbENxTHRqTFZ6eE01VWY5VFUyU2xaaGFwdVRld3dCTUZlMnRxTmNmN0dUY3YtQllVZTNQaHNLWlQtVUZHel9jSlU4?oc=5", "source_name": "FA저널", "company_tag": NaN, "keywords": "스마트팩토리", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI, 스마트팩토리, 자동화) 부합에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00171", "category": "market", "title": "LG CNS, 북미 제조 AX 시장 공략 본격화…AI 스마트팩토리 ‘팩토바’ 전면에", "date": "2026-05-20", "content": "LG CNS, 북미 제조 AX 시장 공략 본격화…AI 스마트팩토리 ‘팩토바’ 전면에 테크월드", "summary": "LG CNS, 북미 제조 AX 시장 공략 본격화…AI 스마트팩토리 ‘팩토바’ 전면에 테크월드", "source_url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBrWmRYcGZGTFVIbmtVUVJKdXVtcXBPa2RDZmVPNjhuOVc3RnNsU21GbkZnQzAyRk1tUmt3QUR4RUVpdGRhVEhIMDVKT3VLdlJLdXNtbmJUamxGd2M2bnExd29yVE04dFZ6?oc=5", "source_name": "테크월드", "company_tag": NaN, "keywords": "스마트팩토리", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI, 제조 AX, 스마트팩토리) 부합에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00224", "category": "market", "title": "포인드, 철강 품질검사에 AI 기술 접목…불량 검출 자동화로 생산 효율 향상", "date": "2025-11-17", "content": "포인드, 철강 품질검사에 AI 기술 접목…불량 검출 자동화로 생산 효율 향상 한국경제", "summary": "포인드, 철강 품질검사에 AI 기술 접목…불량 검출 자동화로 생산 효율 향상 한국경제", "source_url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5qVC1LTWJSQWVZblJnZ2RPZHNYS1o0NjRjLWstbHN6NU9lelZ4Y01nT0gtRDJRckM1ZGNEekl4aVNFRHNwX2sxUk5MaUdoc0tYQlg1bHpnRW51dw?oc=5", "source_name": "한국경제", "company_tag": NaN, "keywords": "품질검사", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI, 자동화, 품질검사) 부합에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00329", "category": "market", "title": "[인터뷰] 아이브 성민수 대표 “AiVOps로 머신비전과 물류 자동화 조준”", "date": "2023-09-09", "content": "[인터뷰] 아이브 성민수 대표 “AiVOps로 머신비전과 물류 자동화 조준” 헬로티", "summary": "[인터뷰] 아이브 성민수 대표 “AiVOps로 머신비전과 물류 자동화 조준” 헬로티", "source_url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9xdW1NVGVuUk9SNVMycnN5NkltLVBvcGtBdnJGY1VXRW1uNFBsdHJIdzVVbXUzWjg0ZXA2QVFIdnFfUnpCbUp4Y2RfTjZra2xyRkp5bnZMMmpCYnRKenc?oc=5", "source_name": "헬로티", "company_tag": NaN, "keywords": "머신비전", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(AI, 머신비전, 자동화) 부합에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00352", "category": "market", "title": "코그넥스코리아, ‘스마트팩토리·자동화산업전 2023’서 제조공정 전반의 머신비전 및 딥러닝 솔루션 소개해", "date": "2023-03-10", "content": "코그넥스코리아, ‘스마트팩토리·자동화산업전 2023’서 제조공정 전반의 머신비전 및 딥러닝 솔루션 소개해 에이빙", "summary": "코그넥스코리아, ‘스마트팩토리·자동화산업전 2023’서 제조공정 전반의 머신비전 및 딥러닝 솔루션 소개해 에이빙", "source_url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1wTXJMUjhQTGNyVnpCM0tGOWdxNm5mdkp4T2J4T19qTXpYckpuSWRVQktaRUtBb1pzOVZSb0cxc1FYQUVjaWlXcXQxbjU0QklkbUZCWWdyMjVaODE3OG9GQkZCMDVVS03SAWtBVV95cUxPbGt0UUtablM1VEtZUzhNNmlka2pxdWRZSG5ITzFQSjJzdVBOdUlNQkdOSmFTOS1hMkFiRWZ2X2E4bHpmLVhJZVdWMTNNb3N6U3pNNzdYYTdtVXpacjVqZjJycmNROGs2VVpqWQ?oc=5", "source_name": "에이빙", "company_tag": NaN, "keywords": "머신비전", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 53.0, "recommendation_reason": "핵심 키워드(머신비전, 스마트팩토리, 자동화) 부합에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00021", "category": "market", "title": "부산 스마트공장, 시스템 구축 넘어 제조AI로 전환…", "date": "2026-09-19", "content": "부산 스마트공장, 시스템 구축 넘어 제조AI로 전환… 중도일보", "summary": "부산 스마트공장, 시스템 구축 넘어 제조AI로 전환… 중도일보", "source_url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBUQzAwSnl5MjJURVVwcFl2ZzJIUDZ4WjhfV3ppV2hPZTZ6UVJia0xwNjdxdlVwT2YxN1g4ampObFNwVkZTR01heTRxTWVxOUkzM0I2UWZycFFoYnJaUzVqVFdtX0w?oc=5", "source_name": "중도일보", "company_tag": NaN, "keywords": "AI", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 51.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(스마트공장) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00375", "category": "market", "title": "예천 농부창고, 삼성형 스마트공장 구축…제조 공정 자동화 나선다", "date": "2026-09-18", "content": "예천 농부창고, 삼성형 스마트공장 구축…제조 공정 자동화 나선다 NANOOM ENERGY", "summary": "예천 농부창고, 삼성형 스마트공장 구축…제조 공정 자동화 나선다 NANOOM ENERGY", "source_url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9Sa1I3US15VmhxbV9Fb1M5ZlFTbGl5UHJUZFFSbkp6RFFXMHBSQlhiSWw3RkFPYmlVSE82UU1MQ0J4UTBSek8xYlRPN1NwOFN0SHhkQ2VOLWFmR1N3cjhabk1tbWpwNXE0Ymkwbw?oc=5", "source_name": "NANOOM ENERGY", "company_tag": NaN, "keywords": "자동화", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 51.0, "recommendation_reason": "핵심 키워드(자동화) 부합 · 정부지원/바우처(스마트공장) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00044", "category": "market", "title": "부산 제조업 스마트공장서 ‘제조AI’로…부산TP, 지원체계 고도화", "date": "2026-09-17", "content": "부산 제조업 스마트공장서 ‘제조AI’로…부산TP, 지원체계 고도화 브릿지경제", "summary": "부산 제조업 스마트공장서 ‘제조AI’로…부산TP, 지원체계 고도화 브릿지경제", "source_url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE14d0JoRmRDYmVhTlBKbkI5bVNYaUp6SElMWE5wTVViZGdfWWtXS1RqMG5ZVzhwT29LYTNZQUZoSEQxaktUc2VFMW12eDRIdTJnVmFiR1JHUjNTUQ?oc=5", "source_name": "브릿지경제", "company_tag": NaN, "keywords": "AI", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 51.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(스마트공장) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00103", "category": "market", "title": "일본서 본 ‘스마트공장’…안산 제조업, 생산·물류 자동화 현장 확인", "date": "2026-09-14", "content": "일본서 본 ‘스마트공장’…안산 제조업, 생산·물류 자동화 현장 확인 주간한국", "summary": "일본서 본 ‘스마트공장’…안산 제조업, 생산·물류 자동화 현장 확인 주간한국", "source_url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5ncUtYbTMxS0NjMlR4Y18wMV9kVkN3X1NHcmV4UFhrSWxkT296VmppUFFmRDdIbU92RzFRSGN2TVZpeUdEMzNaS0xBM1JKNDBJZFZXOVlJWjI1RkdKcnJSbFhFSFlOQXRQRHQtblJvdXPSAXRBVV95cUxON2VLbjU5aVlkSnZLREFWSV8yTlNyTUVwQW10MTVQcGFLU29nVG52dWRRdllyTmwzUkdjWk5lbm1fUUdzbDJ0WU1LRjAydDNRcngxb2tkRUJxZFBHLWhwa2F3TlRrZWZDeUVidUd5LWpTRFFnZw?oc=5", "source_name": "주간한국", "company_tag": NaN, "keywords": "스마트팩토리", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 51.0, "recommendation_reason": "핵심 키워드(자동화) 부합 · 정부지원/바우처(스마트공장) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00713", "category": "policy", "title": "메타플라이어, 소상공인 11개사 대상 AI 마케팅 자동화 실증", "date": "2026-09-18", "content": "메타플라이어, 소상공인 11개사 대상 AI 마케팅 자동화 실증 데이터넷", "summary": "메타플라이어, 소상공인 11개사 대상 AI 마케팅 자동화 실증 데이터넷", "source_url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFB5VVNJX2Q3TTlWc0pLWVdtbUlSR2tyNnEtbFAzMGRzR3ZnTWFRa05tRnQxS0ZobVhMa0VEeDB0U0RRMXpUakI5c04yRTZtYnlrMkpjcmg3aEJodWpaVGh6eEE5cE0xQmx3eUhoVQ?oc=5", "source_name": "데이터넷", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 50.0, "recommendation_reason": "핵심 키워드(AI, 자동화) 부합에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00715", "category": "policy", "title": "바이스벌사, AI 바우처·데이터바우처 3년 연속 공급기업 선정", "date": "2026-09-10", "content": "바이스벌사, AI 바우처·데이터바우처 3년 연속 공급기업 선정 패션포스트", "summary": "바이스벌사, AI 바우처·데이터바우처 3년 연속 공급기업 선정 패션포스트", "source_url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPRjFpT2ZBd0toWGk3NjZYcEJ1QnZPbW8wRW90V05nTWdfMFo4R3U2R3luTE1LQWVuZGsydUJNTV83OS1HYTExNk9UVlI3ZDRIZ3JxbEI3aHE3VW5nZnZfcHZLX0RmY0NvUFVRWUhYNXk4d1BsX08tUE1zemJ2UjRtOVdXbjZfbnpJYWxQM0xPeFZVYmJsVkpBSkY0dWdzRlJLNndiRjRYd2w2SDRnQlNXTVVoWHZNZk9SUnkyQjBBMW5EbHRW?oc=5", "source_name": "패션포스트", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 49.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(AI 바우처) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00714", "category": "policy", "title": "투비디티엑스, ‘2023 AI 바우처 지원사업 공급기업’ 선정 쾌거", "date": "2026-09-09", "content": "투비디티엑스, ‘2023 AI 바우처 지원사업 공급기업’ 선정 쾌거 catchnews.kr", "summary": "투비디티엑스, ‘2023 AI 바우처 지원사업 공급기업’ 선정 쾌거 catchnews.kr", "source_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5WZnUzb3BlNzFnLWloaG1rcFR3QmhGaGhWdlA1N1BzaDc3dWlPWGpESFpaTzJQNEhsRmthRjNfaGlfNi02cXNWTHpTcWl0dFJqQTUxXzlsYzZ1UmNGanQ4b2owYW9OSkpNMFHSAW5BVV95cUxPRjZkUkRhQ3A4YWZKSjdGTGZ0aFNRdDJaUTRYWFJlNVdESkFxUkxFT2RvWUI4UjZ0UHZBUjFaOThVeE5idEc4QzRhSklQQnZEcFVSSUFtR2pMUTlvWGJEcVgtUTJQeWJpXzRjTHhRUQ?oc=5", "source_name": "catchnews.kr", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 49.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(AI 바우처) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00719", "category": "policy", "title": "청년 50만 명에 'AI 이용권' 지급하는 오세훈, 청소년 'AI 바우처' 전액 삭감한 추미애", "date": "2026-09-03", "content": "청년 50만 명에 'AI 이용권' 지급하는 오세훈, 청소년 'AI 바우처' 전액 삭감한 추미애 v.daum.net", "summary": "청년 50만 명에 'AI 이용권' 지급하는 오세훈, 청소년 'AI 바우처' 전액 삭감한 추미애 v.daum.net", "source_url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1CelVBeXBSakw4Q1BVWlZYMjhWUENWQ0FCNS11UFhWenIyZVdUUlVTN1ltUDEyNUoyR05iQXZlWXczTW83UkE?oc=5", "source_name": "v.daum.net", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 49.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(AI 바우처) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}, {"article_id": "CLN-00753", "category": "policy", "title": "방미통위 첫 예산 2977억원…소외계층 AI 바우처는 빠졌다", "date": "2026-09-01", "content": "방미통위 첫 예산 2977억원…소외계층 AI 바우처는 빠졌다 디지털데일리", "summary": "방미통위 첫 예산 2977억원…소외계층 AI 바우처는 빠졌다 디지털데일리", "source_url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1LT1BZazJLdnBOQmp5UmFaS3RWRVN4TTZidDVSdmlvOEctc1JEUS1FeUtyWDRISDNhMVBnbFJtWE1ZT0JUeEt4bm9vVEdRTUZudTlMeU9SZHctWmJuckRpLXUwN0I5Y1U?oc=5", "source_name": "디지털데일리", "company_tag": NaN, "keywords": "AI 바우처", "collected_at": "2026-09-19T15:38:10.090473+09:00", "has_null": false, "is_duplicate_seed": false, "data_origin": "live", "relevance_score": 49.0, "recommendation_reason": "핵심 키워드(AI) 부합 · 정부지원/바우처(AI 바우처) 연계 가능에 따른 맞춤형 추천.", "business_impact": "Medium"}];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            const noResults = document.getElementById('noResults');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            noResults.classList.add('hidden');
+
+            data.forEach((item, index) => {
+                const cat = (item.category || 'market').toLowerCase();
+                let badgeCls = 'badge-market';
+                let catName = '시장';
+                if (cat.includes('policy')) { badgeCls = 'badge-policy'; catName = '정책'; }
+                else if (cat.includes('tech')) { badgeCls = 'badge-tech'; catName = '기술'; }
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-800/40 transition';
+                tr.innerHTML = `
+                    <td class="py-3.5 px-3 text-center font-bold text-slate-400">#${index + 1}</td>
+                    <td class="py-3.5 px-3"><span class="px-2 py-0.5 rounded-md text-[11px] font-semibold ${badgeCls}">${catName}</span></td>
+                    <td class="py-3.5 px-4">
+                        <div class="font-bold text-slate-100 hover:text-emerald-400 transition cursor-pointer" onclick="window.open('${item.source_url}', '_blank')">
+                            ${item.title}
+                        </div>
+                        <div class="text-[11px] text-slate-400 mt-1 leading-normal">
+                            ${item.recommendation_reason || ''}
+                        </div>
+                    </td>
+                    <td class="py-3.5 px-3 text-slate-300">${item.source_name || '-'}</td>
+                    <td class="py-3.5 px-3 text-slate-400 whitespace-nowrap">${item.date || '-'}</td>
+                    <td class="py-3.5 px-3 text-center font-bold text-emerald-400">${item.relevance_score || 0}</td>
+                    <td class="py-3.5 px-3 text-center">
+                        <a href="${item.source_url}" target="_blank" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-[11px] border border-slate-700 transition">
+                            링크
+                        </a>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterArticles() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cat = document.getElementById('categoryFilter').value;
+
+            const filtered = articles.filter(a => {
+                const matchesCat = (cat === 'ALL') || (a.category && a.category.toLowerCase().includes(cat.toLowerCase()));
+                const searchTarget = `${a.title} ${a.source_name} ${a.recommendation_reason} ${a.keywords}`.toLowerCase();
+                const matchesQuery = !query || searchTarget.includes(query);
+                return matchesCat && matchesQuery;
+            });
+
+            renderTable(filtered);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterArticles);
+        document.getElementById('categoryFilter').addEventListener('change', filterArticles);
+
+        // 초기 렌더링
+        renderTable(articles);
+    </script>
+</body>
+</html>
